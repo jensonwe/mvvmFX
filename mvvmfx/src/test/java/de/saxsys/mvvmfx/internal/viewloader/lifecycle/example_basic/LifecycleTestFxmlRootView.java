@@ -4,12 +4,12 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
 
-public class LifecycleTestRootView implements FxmlView<LifecycleTestRootViewModel> {
+public class LifecycleTestFxmlRootView implements FxmlView<LifecycleTestRootViewModel> {
 
 	@FXML
-	public LifecycleTestSub1View sub1Controller;
+	public LifecycleTestFxmlSub1View sub1Controller;
 	@FXML
-	public LifecycleTestSub2View sub2Controller;
+	public LifecycleTestFxmlSub2View sub2Controller;
 
 	@InjectViewModel
 	private LifecycleTestRootViewModel viewModel;

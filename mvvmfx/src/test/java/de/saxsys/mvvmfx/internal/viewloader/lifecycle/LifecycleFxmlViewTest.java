@@ -3,17 +3,17 @@ package de.saxsys.mvvmfx.internal.viewloader.lifecycle;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.SceneLifecycle;
 import de.saxsys.mvvmfx.ViewTuple;
-import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestRootView;
+import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestFxmlRootView;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestRootViewModel;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestSub1ViewModel;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestSub2ViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_gc.LifecycleGCTestRootView;
+import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_gc.LifecycleGCTestFxmlRootView;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_gc.LifecycleGCTestRootViewModel;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_gc.LifecycleGCTestSub1ViewModel;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_gc.LifecycleGCTestSub2ViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification.LifecycleNotificationView;
+import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification.LifecycleFxmlNotificationView;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification.LifecycleNotificationViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification_without_lifecycle.NotificationWithoutLifecycleView;
+import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification_without_lifecycle.NotificationFxmlWithoutLifecycleView;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_notification_without_lifecycle.NotificationWithoutLifecycleViewModel;
 import de.saxsys.mvvmfx.testingutils.FxTestingUtils;
 import de.saxsys.mvvmfx.testingutils.GCVerifier;
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(JfxToolkitExtension.class)
-public class LifecycleTest {
+public class LifecycleFxmlViewTest {
 
 	/**
 	 * This test shows that the lifecycle methods are invoked
@@ -51,8 +51,8 @@ public class LifecycleTest {
 			LifecycleTestSub2ViewModel.onViewAddedCalled = 0;
 			LifecycleTestSub2ViewModel.onViewRemovedCalled = 0;
 
-			ViewTuple<LifecycleTestRootView, LifecycleTestRootViewModel> viewTuple = FluentViewLoader
-					.fxmlView(LifecycleTestRootView.class).load();
+			ViewTuple<LifecycleTestFxmlRootView, LifecycleTestRootViewModel> viewTuple = FluentViewLoader
+					.fxmlView(LifecycleTestFxmlRootView.class).load();
 
 			// the root view is not directly added to the Scene but encapsulated in
 			// another container
@@ -131,8 +131,8 @@ public class LifecycleTest {
 			LifecycleTestSub2ViewModel.onViewAddedCalled = 0;
 			LifecycleTestSub2ViewModel.onViewRemovedCalled = 0;
 
-			ViewTuple<LifecycleTestRootView, LifecycleTestRootViewModel> viewTuple = FluentViewLoader
-					.fxmlView(LifecycleTestRootView.class).load();
+			ViewTuple<LifecycleTestFxmlRootView, LifecycleTestRootViewModel> viewTuple = FluentViewLoader
+					.fxmlView(LifecycleTestFxmlRootView.class).load();
 
 			// GC is performed, however as we still have a reference to the viewTuple,
 			// nothing will be collected yet.
@@ -225,8 +225,8 @@ public class LifecycleTest {
 		FxTestingUtils.runInFXThread(() -> {
 			NotificationCenterFactory.setNotificationCenter(new DefaultNotificationCenter());
 
-			ViewTuple<NotificationWithoutLifecycleView, NotificationWithoutLifecycleViewModel> viewTuple = FluentViewLoader
-					.fxmlView(NotificationWithoutLifecycleView.class).load();
+			ViewTuple<NotificationFxmlWithoutLifecycleView, NotificationWithoutLifecycleViewModel> viewTuple = FluentViewLoader
+					.fxmlView(NotificationFxmlWithoutLifecycleView.class).load();
 
 			VBox container = new VBox();
 
@@ -276,8 +276,8 @@ public class LifecycleTest {
 		FxTestingUtils.runInFXThread(() -> {
 			NotificationCenterFactory.setNotificationCenter(new DefaultNotificationCenter());
 
-			ViewTuple<LifecycleNotificationView, LifecycleNotificationViewModel> viewTuple = FluentViewLoader
-					.fxmlView(LifecycleNotificationView.class).load();
+			ViewTuple<LifecycleFxmlNotificationView, LifecycleNotificationViewModel> viewTuple = FluentViewLoader
+					.fxmlView(LifecycleFxmlNotificationView.class).load();
 
 			VBox container = new VBox();
 
@@ -336,8 +336,8 @@ public class LifecycleTest {
 			LifecycleGCTestSub2ViewModel.onViewRemovedCalled = 0;
 
 
-			ViewTuple<LifecycleGCTestRootView, LifecycleGCTestRootViewModel> viewTuple = FluentViewLoader
-					.fxmlView(LifecycleGCTestRootView.class).load();
+			ViewTuple<LifecycleGCTestFxmlRootView, LifecycleGCTestRootViewModel> viewTuple = FluentViewLoader
+					.fxmlView(LifecycleGCTestFxmlRootView.class).load();
 
 			VBox subContainer = new VBox();
 			subContainer.getChildren().add(viewTuple.getView());
