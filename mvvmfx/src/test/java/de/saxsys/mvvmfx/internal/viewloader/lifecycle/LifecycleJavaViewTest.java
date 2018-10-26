@@ -20,6 +20,8 @@ import de.saxsys.mvvmfx.testingutils.GCVerifier;
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import de.saxsys.mvvmfx.utils.notifications.DefaultNotificationCenter;
 import de.saxsys.mvvmfx.utils.notifications.NotificationCenterFactory;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("until implemented")
+//@Disabled("until implemented")
 @ExtendWith(JfxToolkitExtension.class)
 public class LifecycleJavaViewTest {
 
@@ -291,10 +293,8 @@ public class LifecycleJavaViewTest {
             // this triggeres the lifecycle method which is used to deregister the listener
             container.getChildren().clear();
 
-
             // therefore the ViewModel can now be garbage collected.
             assertThat(vmVerifier.isAvailableForGC()).isTrue();
-
 
             // cleanup notification center to not infer with other tests
             NotificationCenterFactory.setNotificationCenter(new DefaultNotificationCenter());

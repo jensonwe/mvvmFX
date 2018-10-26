@@ -24,6 +24,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Scene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,9 +93,16 @@ public class JavaViewLoader {
 
         final ViewType view = codeBehind == null ? injectionFacade.getInstanceOf(viewType) : codeBehind;
 
+        Scene scene = ((Parent) view).getScene();
+
+        // for the SceneLifecycle we need to know when the view is put into the scene
+        BooleanProperty viewInSceneProperty = new SimpleBooleanProperty();
+
         if (!(view instanceof Parent)) {
             throw new IllegalArgumentException("Can not load java view! The view class has to extend from "
                     + Parent.class.getName() + " or one of it's subclasses");
+        }else{
+            viewInSceneProperty.bind(((Parent) view).sceneProperty().isNotNull());
         }
 
         ViewModelType viewModel = null;
@@ -104,6 +114,8 @@ public class JavaViewLoader {
         } else {
             viewModel = existingViewModel;
         }
+
+        ViewLoaderReflectionUtils.addSceneLifecycleHooks(viewModel, viewInSceneProperty);
 
         ResourceBundleInjector.injectResourceBundle(view, resourceBundle);
 
@@ -127,7 +139,6 @@ public class JavaViewLoader {
             if (existingViewModel == null) {
                 ViewLoaderReflectionUtils.initializeViewModel(viewModel);
             }
-
             ViewLoaderReflectionUtils.injectViewModel(view, viewModel);
         }
 
@@ -138,7 +149,6 @@ public class JavaViewLoader {
             injectResourceBundle(view, resourceBundle);
             callInitialize(view);
         }
-
         return new ViewTuple<>(view, (Parent) view, viewModel);
     }
 

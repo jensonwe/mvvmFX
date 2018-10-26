@@ -5,10 +5,10 @@ import de.saxsys.mvvmfx.JavaView;
 import de.saxsys.mvvmfx.internal.viewloader.lifecycle.example_basic.LifecycleTestSub1ViewModel;
 import javafx.scene.layout.VBox;
 
-public class LifecycleGCTestJavaSub1View extends VBox implements JavaView<LifecycleTestSub1ViewModel> {
+public class LifecycleGCTestJavaSub1View extends VBox implements JavaView<LifecycleGCTestSub1ViewModel> {
 
     @InjectViewModel
-    public LifecycleTestSub1ViewModel viewModel;
+    public LifecycleGCTestSub1ViewModel viewModel;
 
     public void initialize() {
 
